@@ -7,7 +7,9 @@ import ProductDetails from "./pages/ProductDetails";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import CategoryNav from "./components/CategoryNav";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
 
 const App = () => {
   return (
@@ -20,7 +22,7 @@ const App = () => {
           <Route path="/product/:id" element={<ProductDetails />}></Route>
         </Routes>
         <Sidebar />
-        <Footer />
+       
       </Router>
     </div>
   );

@@ -16,13 +16,13 @@ const CategoryNav = () => {
   ];
 
   return (
-    <nav className="bg-gradient-to-r from-gray-100 to-gray-200 py-3 shadow-lg border-b border-gray-300">
+    <nav className="bg-blue-50 hidden lg:block py-3 mt-4 shadow-lg border-t border-gray-300">
       <div className="container mx-auto flex justify-center space-x-6 overflow-x-auto px-4">
         {categories.map((category, index) => (
           <Link
             key={index}
             to={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-            className="text-gray-700 hover:text-blue-600 font-medium px-3 py-1.5 transition duration-300 ease-in-out rounded-md hover:bg-blue-100"
+            className="text-gray-700 hover:text-blue-600 font-medium text-[14px] px-3 py-1.5 transition duration-300 ease-in-out rounded-md hover:bg-blue-100"
           >
             {category}
           </Link>
