@@ -9,7 +9,7 @@ const CategoryNav = ({ isOpen, toggleSidebar, categories }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-[250px] rounded-bl-2xl bg-black text-white p-6 z-50 transition-transform duration-300 ${
+      className={`fixed top-0 right-0 h-full w-[250px] rounded-bl-2xl bg-blue-900 rounded-l-xl text-white p-6 z-50 transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >

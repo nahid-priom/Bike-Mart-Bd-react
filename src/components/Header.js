@@ -41,20 +41,10 @@ const Header = () => {
 
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <div className="w-[130px]">
+          <div className="w-[100px] lg:w-[130px]">
             <img src={Logo} alt="Logo" />
           </div>
         </Link>
-
-        {/* Navigation Links (Visible on larger screens only) */}
-        <nav className="hidden lg:flex items-center space-x-6">
-          <Link to="/about" className="text-gray-700 hover:text-black">
-            About Us
-          </Link>
-          <Link to="/blog" className="text-gray-700 hover:text-black">
-            Blog
-          </Link>
-        </nav>
 
         {/* Search Bar */}
         <div className="relative flex-1 max-w-md mx-2 lg:mx-4 ">
@@ -68,7 +58,7 @@ const Header = () => {
         </div>
 
         {/* Cart and Profile Icons */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 lg:space-x-8">
           <Link
             to="/profile"
             className="text-2xl text-gray-700 hover:text-black"
@@ -85,9 +75,12 @@ const Header = () => {
               {itemAmount}
             </div>
           </div>
+          <buton className="border-blue-300 hidden lg:block border px-2 py-1 cursor-pointer hover:bg-blue-900 hover:text-white rounded-md text-blue-900 ml-4">
+            Login/SignUp
+          </buton>
         </div>
       </div>
-        
+
       <CategoryNav />
 
       {/* Sidebar for mobile category navigation */}
