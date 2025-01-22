@@ -25,7 +25,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="mt-24 lg:mt-40 max-w-7xl mx-auto">
+    <section className="mt-20 lg:mt-32 max-w-7xl mx-auto">
       {/* Slider Section */}
       <div className="relative">
         <Slider {...sliderSettings}>
@@ -34,12 +34,12 @@ const Hero = () => {
               <img
                 src={image.src}
                 alt={image.alt}
-                className="w-full lg:h-[500px] h-[180px] object-cover rounded-md shadow-lg"
+                className="w-full lg:h-[500px] h-[200px] object-cover rounded-md shadow-lg"
               />
             </div>
           ))}
         </Slider>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10 pointer-events-none"></div>
+       
       </div>
 
      

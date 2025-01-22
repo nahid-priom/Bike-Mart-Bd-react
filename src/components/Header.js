@@ -26,7 +26,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-red-50 z-50 shadow-md fixed w-full z-10 transition-all">
+    <header className="bg-red-50 z-50 shadow-md fixed w-full transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-6 lg:px-0">
         {/* Burger Icon for Mobile */}
         <button
@@ -42,7 +42,7 @@ const Header = () => {
 
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <div className="w-[80px] lg:w-[130px]">
+          <div className="w-[80px] lg:w-[100px]">
             <img src={Logo} alt="Logo" className="" />
           </div>
         </Link>
