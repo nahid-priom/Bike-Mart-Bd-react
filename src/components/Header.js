@@ -1,5 +1,4 @@
-// Header.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../img/logo.png";
 import { FaBars } from "react-icons/fa";
@@ -9,6 +8,7 @@ const Header = () => {
   const [showBrandsDropdown, setShowBrandsDropdown] = useState(false);
   const [activeBrand, setActiveBrand] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const brands = [
     {
@@ -25,8 +25,26 @@ const Header = () => {
     },
   ];
 
+  // Track scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="bg-red-50 z-50 shadow-md fixed w-full transition-all">
+    <header
+      className={`z-50 shadow-md fixed w-full transition-all ${
+        isScrolled ? "bg-black" : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-6 lg:px-0">
         {/* Burger Icon for Mobile */}
         <button
@@ -42,7 +60,7 @@ const Header = () => {
 
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <div className="w-[80px] lg:w-[100px]">
+          <div className="w-[80px] lg:w-[120px]">
             <img src={Logo} alt="Logo" className="" />
           </div>
         </Link>
@@ -57,7 +75,7 @@ const Header = () => {
               setActiveBrand(null);
             }}
           >
-            <span className="cursor-pointer hover:text-red-400 flex items-center">
+            <span className="cursor-pointer text-white hover:text-red-400 flex items-center">
               Brands
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,27 +143,48 @@ const Header = () => {
               </div>
             )}
           </div>
-          <Link to="/about" className="hover:text-red-400">
+          <Link to="/about" className="hover:text-red-400 text-white">
             About
           </Link>
-          <Link to="/blog" className="hover:text-red-400">
+          <Link to="/blog" className="hover:text-red-400 text-white">
             Blog
           </Link>
-          <Link to="/contact" className="hover:text-red-400">
+          <Link to="/contact" className="hover:text-red-400 text-white">
             Contact
           </Link>
         </nav>
 
+        {/* Cart and Profile Icons */}
+        <div className="hidden lg:flex items-center space-x-2 lg:space-x-8">
+          <button className="border-red-500 border text-white px-2 py-1 cursor-pointer hover:bg-red-700 hover:text-red-50 rounded-md ml-4 transition-transform transform hover:scale-105">
+            Login/SignUp
+          </button>
+        </div>
+      </div>
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="absolute top-full left-0 bg-red-500  w-full shadow-md lg:hidden transition-all transform scale-100">
             <nav className="flex flex-col font-medium py-4">
               <div className="px-6 py-2 relative">
                 <span
-                  className="cursor-pointer text-red-50 hover:text-red-400"
+                  className="cursor-pointer text-red-50 flex items-center hover:text-red-400"
                   onClick={() => setShowBrandsDropdown(!showBrandsDropdown)}
                 >
                   Brands
+                  <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                className="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
                 </span>
                 {showBrandsDropdown && (
                   <div className="bg-red-50 text-black shadow-lg rounded-md py-2 w-full mt-2">
@@ -182,14 +221,6 @@ const Header = () => {
             </nav>
           </div>
         )}
-
-        {/* Cart and Profile Icons */}
-        <div className="hidden lg:flex items-center space-x-2 lg:space-x-8">
-          <button className="border-red-500 border  px-2 py-1 cursor-pointer hover:bg-red-700 hover:text-red-50 rounded-md  ml-4 transition-transform transform hover:scale-105">
-            Login/SignUp
-          </button>
-        </div>
-      </div>
     </header>
   );
 };
