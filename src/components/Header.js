@@ -48,7 +48,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-6 lg:px-0">
         {/* Burger Icon for Mobile */}
         <button
-          className="text-2xl lg:hidden bg-red-500 text-red-50 px-2 py-2 rounded-lg mr-4 transition-transform transform hover:scale-110"
+          className="text-2xl lg:hidden bg-red-700 text-red-50 px-2 py-2 rounded-lg mr-4 transition-transform transform hover:scale-110"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? (
@@ -161,66 +161,132 @@ const Header = () => {
           </button>
         </div>
       </div>
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="absolute top-full left-0 bg-red-500  w-full shadow-md lg:hidden transition-all transform scale-100">
-            <nav className="flex flex-col font-medium py-4">
-              <div className="px-6 py-2 relative">
-                <span
-                  className="cursor-pointer text-red-50 flex items-center hover:text-red-400"
-                  onClick={() => setShowBrandsDropdown(!showBrandsDropdown)}
-                >
-                  Brands
-                  <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                className="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform"
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed top-0 left-0 bg-black w-full h-screen shadow-md lg:hidden z-50 transition-transform transform translate-x-0">
+          <nav className="flex flex-col font-medium py-4 relative h-full">
+            {/* Close Button */}
+            <div className="px-6 py-4 pl-10 text-right">
+              <button
+                className="text-red-50 font-bold bg-red-700 rounded-xl px-4 py-2 text-lg"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-                </span>
-                {showBrandsDropdown && (
-                  <div className="bg-red-50 text-black shadow-lg rounded-md py-2 w-full mt-2">
-                    {brands.map((brand) => (
+                ✕
+              </button>
+            </div>
+
+            {/* Nav Links */}
+            <div className="px-6 py-4 pl-10 relative">
+              <span
+                className="cursor-pointer text-red-50 flex text-3xl font-bold items-center hover:text-red-400"
+                onClick={() => setShowBrandsDropdown(!showBrandsDropdown)}
+              >
+                Brands
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className={`w-4 h-4 ml-1 transform transition-transform ${
+                    showBrandsDropdown ? "rotate-180" : ""
+                  }`}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </span>
+              {/* Subcategories */}
+              <div
+                className={`overflow-hidden transition-all duration-1000 ease-in-out ${
+                  showBrandsDropdown
+                    ? "max-h-screen opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="bg-red-50 text-black shadow-lg rounded-md py-2 w-full mt-2">
+                  {brands.map((brand) => (
+                    <div key={brand.name} className="relative">
                       <div
-                        key={brand.name}
-                        className="px-4 py-2 hover:bg-red-100 cursor-pointer relative"
+                        className="px-4 py-2 hover:bg-red-700 hover:text-white cursor-pointer font-bold flex justify-between items-center"
+                        onClick={() => {
+                          setActiveBrand(
+                            activeBrand === brand.name ? null : brand.name
+                          );
+                        }}
                       >
                         {brand.name}
-                        <div className="bg-red-50 shadow-lg rounded-md py-2 w-full mt-2">
-                          {brand.models.map((model) => (
-                            <div
-                              key={model}
-                              className="px-4 py-2 hover:bg-red-100 cursor-pointer"
-                            >
-                              {model}
-                            </div>
-                          ))}
-                        </div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className={`w-4 h-4 transform transition-transform ${
+                            activeBrand === brand.name ? "rotate-180" : ""
+                          }`}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
                       </div>
-                    ))}
-                  </div>
-                )}
+                      {/* Child Categories */}
+                      <div
+                        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                          activeBrand === brand.name
+                            ? "max-h-screen opacity-100"
+                            : "max-h-0 opacity-0"
+                        }`}
+                      >
+                        {activeBrand === brand.name && (
+                          <div className="bg-red-50 shadow-lg rounded-md py-2 w-full mt-2">
+                            {brand.models.map((model) => (
+                              <div
+                                key={model}
+                                className="px-4 py-2 font-semibold hover:bg-red-700 hover:text-white first-letter: cursor-pointer"
+                              >
+                                {model}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <Link to="/about" className="px-6 py-2 hover:text-red-400">
-                About
-              </Link>
-              <Link to="/blog" className="px-6 py-2 hover:text-red-400">
-                Blog
-              </Link>
-              <Link to="/contact" className="px-6 py-2 hover:text-red-400">
-                Contact
-              </Link>
-            </nav>
-          </div>
-        )}
+            </div>
+            {/* Static Links */}
+            <Link
+              to="/about"
+              className="px-6 py-4 pl-10 text-3xl font-bold text-red-50 hover:text-red-400"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              to="/blog"
+              className="px-6 py-4 pl-10 text-3xl font-bold text-red-50 hover:text-red-400"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link
+              to="/contact"
+              className="px-6 py-4 pl-10 text-3xl font-bold text-red-50 hover:text-red-400"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
