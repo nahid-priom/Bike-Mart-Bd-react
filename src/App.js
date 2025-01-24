@@ -9,17 +9,21 @@ import Footer from "./components/Footer";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import FloatingCallButton from "./components/FloatingCallButton";
+import BikeDetails from "./components/BikeDetails";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 const App = () => {
   return (
     <div className="overflow-hidden">
       <Router>
+        <ScrollToTop/>
         <Header />
        
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
+          <Route path="/bike/:bikeName" element={<BikeDetails />} />
 
          
         </Routes>

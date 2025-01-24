@@ -1,4 +1,4 @@
-const AboutHero = () => {
+const OtherHero = ({title, description}) => {
   return (
     <div className="relative bg-black text-white py-16 pt-32">
       <div className="absolute inset-0">
@@ -9,13 +9,13 @@ const AboutHero = () => {
         />
       </div>
       <div className="relative z-10 container mx-auto text-center">
-        <h1 className="text-4xl font-bold">About Us</h1>
+        <h1 className="text-4xl font-bold">{title}</h1>
         <p className="mt-4 text-lg">
-          Passionate about motorbikes. Driven by adventure.
+          {description}
         </p>
       </div>
     </div>
   );
 };
 
-export default AboutHero;
+export default OtherHero;

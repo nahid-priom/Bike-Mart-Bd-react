@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 const featuredBikes = [
   {
@@ -114,9 +115,11 @@ const FeaturedBikes = () => {
                 {bike.name}
               </h3>
               <p className="text-gray-600 text-sm mt-2">{bike.description}</p>
-              <button className="mt-4 px-4 py-2 bg-red-50 text-red-500 font-bold border border-red-500 hover:text-white text-sm rounded-md hover:bg-red-600 transition-all">
-                Book Appointment
-              </button>
+              <Link to={`/bike/${bike.name}`}>
+                <button className="mt-4 px-4 py-2 bg-red-50 text-red-500 font-bold border border-red-500 hover:text-white text-sm rounded-md hover:bg-red-600 transition-all">
+                  View Details
+                </button>
+              </Link>
             </div>
           </div>
         ))}

@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 const yamahaBikes = [
   {
@@ -13,7 +14,7 @@ const yamahaBikes = [
     discount: "10%",
   },
   {
-    name: "Yamaha FZ-S V3",
+    name: "Yamaha FZ",
     image:
       "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/slider/majesty-red6427c0fec33b0.webp",
     description: "Stylish and fuel-efficient commuter bike.",
@@ -90,17 +91,19 @@ const YamahaBikes = () => {
                 {bike.price}
               </div>
               <div className="absolute top-3 right-0 bg-white text-red-500 border border-red-500 text-sm font-bold w-12 h-12 flex items-center justify-center rounded-full animate-bounce">
-              {bike.discount}
-            </div>
+                {bike.discount}
+              </div>
             </div>
             <div className="mt-4 text-center">
               <h3 className="text-base font-semibold text-gray-800">
                 {bike.name}
               </h3>
               <p className="text-gray-600 text-sm mt-2">{bike.description}</p>
-              <button className="mt-4 px-4 py-2 bg-red-50 text-red-500 font-bold border border-red-500 hover:text-white text-sm rounded-md hover:bg-red-600 transition-all">
-                Book Appointment
-              </button>
+              <Link to={`/bike/${bike.name}`}>
+                <button className="mt-4 px-4 py-2 bg-red-50 text-red-500 font-bold border border-red-500 hover:text-white text-sm rounded-md hover:bg-red-600 transition-all">
+                  View Details
+                </button>
+              </Link>
             </div>
           </div>
         ))}
