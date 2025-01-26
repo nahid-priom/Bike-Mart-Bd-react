@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const featuredBikes = [
   {
@@ -48,6 +48,7 @@ const featuredBikes = [
 ];
 
 const FeaturedBikes = () => {
+  const navigate = useNavigate();
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -90,7 +91,8 @@ const FeaturedBikes = () => {
         {featuredBikes.map((bike, index) => (
           <div
             key={index}
-            className="p-4 bg-white shadow-md h-96 border border-red-200 rounded-lg hover:shadow-xl transition-all relative"
+            className="p-4 bg-white cursor-pointer shadow-md h-96 border border-red-200 rounded-lg hover:shadow-xl transition-all relative"
+            onClick={() => navigate(`/bike/${bike.name}`)}
           >
             {/* Image Section */}
             <div className="relative pt-4 overflow-hidden rounded-lg">
