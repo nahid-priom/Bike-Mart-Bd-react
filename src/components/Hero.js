@@ -2,8 +2,10 @@ import React from "react";
 import { motion } from "framer-motion"; // Import Framer Motion
 import motorcycleImg from "../img/motorcycle.png";
 import bgImage from "../img/bgimage.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   // Animation variants
   const leftVariant = {
     hidden: { x: "-100%", opacity: 0 },
@@ -47,7 +49,10 @@ const Hero = () => {
             Discover high-quality motorcycles from trusted brands. We provide
             the best bikes to match your style and performance needs.
           </p>
-          <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-md">
+          <button
+            onClick={() => navigate("/all-categories")}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-md"
+          >
             Explore Our Collection
           </button>
         </motion.div>

@@ -11,6 +11,8 @@ import "slick-carousel/slick/slick-theme.css";
 import FloatingCallButton from "./components/FloatingCallButton";
 import BikeDetails from "./components/BikeDetails";
 import ScrollToTop from "./components/ScrollToTop";
+import AllCategoriesPage from "./pages/AllCategoriesPage";
+import ChildCategoryPage from "./pages/ChildCategoriesPage";
 
 
 const App = () => {
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/bike/:bikeName" element={<BikeDetails />} />
+          <Route path="/all-categories" element ={<AllCategoriesPage />} />
+          <Route path="/category/:name" element={<ChildCategoryPage />} />
 
          
         </Routes>

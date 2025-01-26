@@ -156,11 +156,11 @@ const Header = () => {
         </nav>
 
         {/* Cart and Profile Icons */}
-        <div className="hidden lg:flex items-center space-x-2 lg:space-x-8">
+        {/* <div className="hidden lg:flex items-center space-x-2 lg:space-x-8">
           <button className="border-red-500 border text-white px-2 py-1 cursor-pointer hover:bg-red-700 hover:text-red-50 rounded-md ml-4 transition-transform transform hover:scale-105">
             Login/SignUp
           </button>
-        </div>
+        </div> */}
       </div>
       {/* Mobile Menu */}
       {mobileMenuOpen && (

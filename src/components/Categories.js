@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   {
@@ -27,6 +28,7 @@ const categories = [
 ];
 
 const AllCategories = () => {
+  const navigate = useNavigate ()
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -57,16 +59,25 @@ const AllCategories = () => {
 
   return (
     <section className=" mt-4 lg:mt-16 max-w-7xl mx-auto px-4 lg:px-0">
-      <h2 className="text-xl sm:text-3xl font-extrabold text-red-600 tracking-wide uppercase mb-8">
-        <span className="inline-block border-b-4 border-red-500 pb-2">
-          All Categories
-        </span>
-      </h2>
+     <div className="flex justify-between mt-4 items-center my-8 lg:mb-12">
+          <h2 className="text-xl sm:text-3xl font-extrabold text-red-600 tracking-wide uppercase">
+            <span className="inline-block border-b-4 border-red-500 pb-2">
+              All Categories
+            </span>
+          </h2>
+          <button
+            className="text-sm sm:text-base bg-red-500 text-white font-medium px-4 py-2 rounded-md hover:bg-red-600 transition-all"
+            onClick={() => navigate("/all-categories")}
+          >
+            See All
+          </button>
+        </div>
       <Slider {...sliderSettings}>
         {categories.map((category, index) => (
           <div
             key={index}
-            className="p-4 bg-white flex flex-col border border-red-200 items-center justify-center shadow-lg rounded-lg hover:shadow-xl transition-all"
+            className="p-4 bg-white cursor-pointer flex flex-col border border-red-200 items-center justify-center shadow-lg rounded-lg hover:shadow-xl transition-all"
+            onClick={() => navigate(`/category/${category.name}`)}
           >
             <div className="rounded-lg">
               <img
