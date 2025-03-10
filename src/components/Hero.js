@@ -1,11 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion"; // Import Framer Motion
-import motorcycleImg from "../img/motorcycle.png";
 import bgImage from "../img/bgimage.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [motorcycleImage, setMotorcycleImage] = useState("");
+
+  useEffect(() => {
+    const fetchImage = async () => {
+     
+      const cachedData = localStorage.getItem("cachedSliderData");
+
+      if (cachedData) {
+       
+        const { imagePath, timestamp } = JSON.parse(cachedData);
+
+       
+        const isCacheValid = new Date().getTime() - timestamp < 3600000; // 1 hour in milliseconds
+
+        if (isCacheValid) {
+          console.log("Using cached data");
+          const fullImageUrl = `/public/${imagePath}`;
+          setMotorcycleImage(fullImageUrl);
+          return; 
+        }
+      }
+
+      
+      try {
+        const response = await fetch("/public/api/slider");
+        const result = await response.json();
+        console.log(result);
+
+        if (result.data && result.data.length > 0) {
+          const imagePath = result.data[0].image;
+          console.log("Image Path:", imagePath);
+
+        
+          const fullImageUrl = `/public/${imagePath}`;
+          console.log("Full Image URL:", fullImageUrl);
+
+        
+          setMotorcycleImage(fullImageUrl);
+
+         
+          const cacheData = {
+            imagePath,
+            timestamp: new Date().getTime(), 
+          };
+          localStorage.setItem("cachedSliderData", JSON.stringify(cacheData));
+        } else {
+          console.error("No image data found in the response");
+        }
+      } catch (error) {
+        console.error("Error fetching the image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+
   // Animation variants
   const leftVariant = {
     hidden: { x: "-100%", opacity: 0 },
@@ -64,11 +119,13 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
         >
-          <img
-            src={motorcycleImg}
-            alt="Motorcycle"
-            className="w-[450px] lg:w-[600px] object-contain"
-          />
+          {motorcycleImage && (
+            <img
+              src={motorcycleImage}
+              alt="Motorcycle"
+              className="w-[450px] lg:w-[600px] object-contain"
+            />
+          )}
         </motion.div>
       </div>
     </section>
