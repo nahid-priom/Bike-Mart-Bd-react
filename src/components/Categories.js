@@ -32,7 +32,7 @@ const AllCategories = () => {
 
       // If no valid cache, fetch new data from the API
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/public/api/categories`);
+        const response = await fetch("/public/api/categories");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }

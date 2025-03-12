@@ -29,7 +29,7 @@ const Hero = () => {
 
       
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/public/api/slider`);
+        const response = await fetch("/public/api/slider");
         const result = await response.json();
         console.log(result);
 
