@@ -29,7 +29,7 @@ const Hero = () => {
 
       
       try {
-        const response = await fetch("/public/api/slider");
+        const response = await fetch("http://bikemart.blacktechcorp.com/public/api/slider");
         const result = await response.json();
         console.log(result);
 
