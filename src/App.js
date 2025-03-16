@@ -11,6 +11,9 @@ import "slick-carousel/slick/slick-theme.css";
 import FloatingCallButton from "./components/FloatingCallButton";
 import BikeDetails from "./components/BikeDetails";
 import ScrollToTop from "./components/ScrollToTop";
+import ClearCache from "./components/ClearCache";
+
+
 import AllCategoriesPage from "./pages/AllCategoriesPage";
 import ChildCategoryPage from "./pages/ChildCategoriesPage";
 import BlogPage from "./pages/BlogPage";
@@ -33,6 +36,8 @@ const App = () => {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/clear-cache" element={<ClearCache />} />
+
         </Routes>
         <FloatingCallButton />
         <Footer />

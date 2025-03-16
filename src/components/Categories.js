@@ -44,7 +44,7 @@ const AllCategories = () => {
           // Transform the API data to match the expected structure
           const transformedCategories = result.data.map((category) => ({
             name: category.name,
-            image: `/public/${category.image}`, // Construct the full image URL
+            image: `http://bikemart.blacktechcorp.com/public/${category.image}`, // Construct the full image URL
             slug: category.slug, // Add slug for navigation
           }));
 

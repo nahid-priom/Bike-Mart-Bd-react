@@ -21,7 +21,7 @@ const Hero = () => {
 
         if (isCacheValid) {
           console.log("Using cached data");
-          const fullImageUrl = `/public/${imagePath}`;
+          const fullImageUrl = `http://bikemart.blacktechcorp.com/public/${imagePath}`;
           setMotorcycleImage(fullImageUrl);
           return; 
         }
@@ -38,7 +38,7 @@ const Hero = () => {
           console.log("Image Path:", imagePath);
 
         
-          const fullImageUrl = `/public/${imagePath}`;
+          const fullImageUrl = `http://bikemart.blacktechcorp.com/public/${imagePath}`;
           console.log("Full Image URL:", fullImageUrl);
 
         

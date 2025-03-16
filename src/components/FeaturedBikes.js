@@ -27,7 +27,7 @@ const FeaturedBikes = () => {
       }
 
       try {
-        const response = await fetch("/public/api/product");
+        const response = await fetch("http://bikemart.blacktechcorp.com/public/api/product");
         if (!response.ok) {
           throw new Error("Failed to fetch featured bikes");
         }
@@ -37,7 +37,7 @@ const FeaturedBikes = () => {
         if (result.data && Array.isArray(result.data)) {
           const transformedBikes = result.data.map((bike) => ({
             name: bike.name,
-            image: `/public/${bike.image}`,
+            image: `http://bikemart.blacktechcorp.com/public/${bike.image}`,
             price: `BDT ${bike.current_price}`,
             discount: calculateDiscount(bike.current_price, bike.old_price),
             description: bike.shortDescription.replace(/<[^>]+>/g, ""), // Remove HTML tags
