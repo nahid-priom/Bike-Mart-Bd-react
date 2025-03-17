@@ -151,7 +151,7 @@ const FeaturedBikes = () => {
             </div>
 
             <div className="mt-4 text-center">
-              <h3 className="text-base lg:text-lg font-semibold text-gray-800">
+              <h3 className="text-sm lg:text-lg font-semibold text-gray-800">
                 {bike.name}
               </h3>
               <p className="text-gray-600 text-[10px] mt-2">
