@@ -21,7 +21,7 @@ const Hero = () => {
 
         if (isCacheValid) {
           console.log("Using cached data");
-          const fullImageUrl = `http://bikemart.blacktechcorp.com/public/${imagePath}`;
+          const fullImageUrl = `https://bikemart.blacktechcorp.com/public/${imagePath}`;
           setMotorcycleImage(fullImageUrl);
           return; 
         }
@@ -29,7 +29,7 @@ const Hero = () => {
 
       
       try {
-        const response = await fetch("http://bikemart.blacktechcorp.com/public/api/slider");
+        const response = await fetch("https://bikemart.blacktechcorp.com/public/api/slider");
         const result = await response.json();
         console.log(result);
 
@@ -38,7 +38,7 @@ const Hero = () => {
           console.log("Image Path:", imagePath);
 
         
-          const fullImageUrl = `http://bikemart.blacktechcorp.com/public/${imagePath}`;
+          const fullImageUrl = `https://bikemart.blacktechcorp.com/public/${imagePath}`;
           console.log("Full Image URL:", fullImageUrl);
 
         
