@@ -15,17 +15,17 @@ const Header = () => {
   const [categories, setCategories] = useState([]);
 
 
-  // Fetch categories from the API or cache
+
   useEffect(() => {
     const fetchCategories = async () => {
-      // Check if data is already cached in localStorage
+
       const cachedData = localStorage.getItem("cachedCategories");
       const now = new Date().getTime();
 
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
 
-        // Check if the cached data is still valid (less than 1 hour old)
+       
         if (now - timestamp < 3600000) {
         
           console.log("Using cached data");
@@ -37,7 +37,7 @@ const Header = () => {
 
      
       try {
-        const response = await fetch("http://bikemart.blacktechcorp.com/public/api/categories");
+        const response = await fetch("https://bikemart.blacktechcorp.com/public/api/categories");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
@@ -46,20 +46,20 @@ const Header = () => {
 
         
         if (result.data && Array.isArray(result.data)) {
-          // Transform the API data to match the expected structure
+          
           const transformedCategories = result.data.map((category) => ({
             name: category.name,
-            image: `/public/${category.image}`, // Construct the full image URL
-            slug: category.slug, // Add slug for navigation
+            image: `https://bikemart.blacktechcorp.com/public/${category.image}`,
+            slug: category.slug, 
           }));
 
-          // Update the state with the transformed data
+         
           setCategories(transformedCategories);
 
-          // Cache the data in localStorage with a timestamp
+          
           const cacheData = {
             data: transformedCategories,
-            timestamp: now, // Store the current timestamp
+            timestamp: now,
           };
           localStorage.setItem("cachedCategories", JSON.stringify(cacheData));
         } else {
@@ -95,7 +95,7 @@ const Header = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-6 lg:px-0">
-        {/* Burger Icon for Mobile */}
+        
         <button
           className="text-2xl lg:hidden bg-red-700 text-red-50 px-2 py-2 rounded-lg mr-4 transition-transform transform hover:scale-110"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -107,14 +107,14 @@ const Header = () => {
           )}
         </button>
 
-        {/* Logo */}
+       
         <Link to="/" className="flex items-center">
           <div className="w-[80px] lg:w-[120px]">
             <img src={Logo} alt="Logo" className="" />
           </div>
         </Link>
 
-        {/* Navigation Links for Desktop */}
+       
         <nav className="hidden lg:flex items-center space-x-8 font-medium">
           <div
             className="relative group"
@@ -175,14 +175,9 @@ const Header = () => {
           </Link>
         </nav>
 
-        {/* Cart and Profile Icons */}
-        {/* <div className="hidden lg:flex items-center space-x-2 lg:space-x-8">
-          <button className="border-red-500 border text-white px-2 py-1 cursor-pointer hover:bg-red-700 hover:text-red-50 rounded-md ml-4 transition-transform transform hover:scale-105">
-            Login/SignUp
-          </button>
-        </div> */}
+       
       </div>
-      {/* Mobile Menu */}
+     
       {mobileMenuOpen && (
         <div className="fixed top-0 left-0 bg-black w-full h-screen shadow-md lg:hidden z-50 transition-transform transform translate-x-0">
           <nav className="flex flex-col font-medium py-4 relative h-full">

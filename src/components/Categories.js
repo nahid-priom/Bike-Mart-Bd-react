@@ -6,55 +6,48 @@ import { useNavigate } from "react-router-dom";
 
 const AllCategories = () => {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([]); // State to store categories
-  const [loading, setLoading] = useState(true); // State to handle loading
-  const [error, setError] = useState(null); // State to handle errors
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch categories from the API or cache
   useEffect(() => {
     const fetchCategories = async () => {
-      // Check if data is already cached in localStorage
       const cachedData = localStorage.getItem("cachedCategories");
       const now = new Date().getTime();
 
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
 
-        // Check if the cached data is still valid (less than 1 hour old)
         if (now - timestamp < 3600000) {
-          // 1 hour = 3600000 milliseconds
           console.log("Using cached data");
           setCategories(data);
           setLoading(false);
-          return; // Exit the function
+          return;
         }
       }
 
-      // If no valid cache, fetch new data from the API
       try {
-        const response = await fetch("http://bikemart.blacktechcorp.com/public/api/categories");
+        const response = await fetch(
+          "https://bikemart.blacktechcorp.com/public/api/categories"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
         const result = await response.json();
         console.log("API Response:", result);
 
-        // Check if the response contains the `data` property
         if (result.data && Array.isArray(result.data)) {
-          // Transform the API data to match the expected structure
           const transformedCategories = result.data.map((category) => ({
             name: category.name,
-            image: `http://bikemart.blacktechcorp.com/public/${category.image}`, // Construct the full image URL
-            slug: category.slug, // Add slug for navigation
+            image: `https://bikemart.blacktechcorp.com/public/${category.image}`,
+            slug: category.slug,
           }));
 
-          // Update the state with the transformed data
           setCategories(transformedCategories);
 
-          // Cache the data in localStorage with a timestamp
           const cacheData = {
             data: transformedCategories,
-            timestamp: now, // Store the current timestamp
+            timestamp: now,
           };
           localStorage.setItem("cachedCategories", JSON.stringify(cacheData));
         } else {
@@ -64,7 +57,7 @@ const AllCategories = () => {
         console.error("Error fetching categories:", error);
         setError(error.message);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -100,22 +93,22 @@ const AllCategories = () => {
     ],
   };
 
-  // Display loading state
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-[200px] bg-black">
         <div className="flex flex-col items-center space-y-4">
-          {/* Spinner */}
+          
           <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
 
-          {/* Loading Text */}
+         
           <p className="text-xl font-semibold text-white">Loading...</p>
         </div>
       </div>
     );
   }
 
-  // Display error state
+
   if (error) {
     return (
       <div className="flex justify-center items-center h-[200px]">
