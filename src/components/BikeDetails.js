@@ -26,7 +26,7 @@ const BikeDetails = () => {
     const fetchBikeDetails = async () => {
       try {
         const response = await fetch(
-          "http://bikemart.blacktechcorp.com/public/api/product"
+          "https://bikemart.blacktechcorp.com/public/api/product"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch bike details");
