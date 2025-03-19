@@ -1,101 +1,120 @@
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import OtherHero from "./OtherHero";
 
-// Dummy data for demonstration
-const featuredBikes = [
-  {
-    name: "Yamaha R15",
-    image:
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    additionalImages: [
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    ],
-    description: "A sporty 155cc bike with cutting-edge technology.",
-    price: "BDT 5,40,000",
-    discount: "10%",
-    longDescription:
-      "The Suzuki Hayabusa is a legendary superbike known for its speed, aerodynamics, and iconic design. Powered by a robust 1340cc engine, it delivers breathtaking acceleration and unmatched performance on highways. It features advanced safety technology like ABS and multiple riding modes for optimal control and stability.",
-  },
-  {
-    name: "Yamaha MT-15",
-    image:
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    additionalImages: [
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    ],
-    description: "A sporty 155cc bike with cutting-edge technology.",
-    price: "BDT 5,40,000",
-    discount: "10%",
-    longDescription:
-      "The Suzuki Hayabusa is a legendary superbike known for its speed, aerodynamics, and iconic design. Powered by a robust 1340cc engine, it delivers breathtaking acceleration and unmatched performance on highways. It features advanced safety technology like ABS and multiple riding modes for optimal control and stability.",
-  },
-  {
-    name: "Yamaha FZ",
-    image:
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    additionalImages: [
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    ],
-    description: "A sporty 155cc bike with cutting-edge technology.",
-    price: "BDT 5,40,000",
-    discount: "10%",
-    longDescription:
-      "The Suzuki Hayabusa is a legendary superbike known for its speed, aerodynamics, and iconic design. Powered by a robust 1340cc engine, it delivers breathtaking acceleration and unmatched performance on highways. It features advanced safety technology like ABS and multiple riding modes for optimal control and stability.",
-  },
-  {
-    name: "Suzuki Hayabusa",
-    image:
-      "https://i0.wp.com/c7.staticflickr.com/6/5687/30724074422_42c153d481_b.jpg?resize=1024%2C683&ssl=1",
-    additionalImages: [
-      "https://i0.wp.com/c7.staticflickr.com/6/5687/30724074422_42c153d481_b.jpg?resize=1024%2C683&ssl=1",
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    ],
-    description: "The ultimate superbike with legendary performance.",
-    price: "BDT 8,40,000",
-    discount: "15%",
-    longDescription:
-      "The Suzuki Hayabusa is a legendary superbike known for its speed, aerodynamics, and iconic design. Powered by a robust 1340cc engine, it delivers breathtaking acceleration and unmatched performance on highways. It features advanced safety technology like ABS and multiple riding modes for optimal control and stability.",
-  },
-  {
-    name: "Honda CBR 650R",
-    image:
-      "https://powersports.honda.com/motorcycle/sport/-/media/products/family/cbr650r/panel-features/desktop/2024/2024-cbr650r-dohc-inline-four-engine.png",
-    additionalImages: [
-      "https://powersports.honda.com/motorcycle/sport/-/media/products/family/cbr650r/panel-features/desktop/2024/2024-cbr650r-dohc-inline-four-engine.png",
-      "https://www.bikebd.com/den/storage/app/files/shares/images/productimages/yamaha-r15-v4628a0297c2cff.webp",
-    ],
-    description: "A powerful middleweight bike for daily rides.",
-    price: "BDT 9,40,000",
-    discount: "5%",
-    longDescription:
-      "The Suzuki Hayabusa is a legendary superbike known for its speed, aerodynamics, and iconic design. Powered by a robust 1340cc engine, it delivers breathtaking acceleration and unmatched performance on highways. It features advanced safety technology like ABS and multiple riding modes for optimal control and stability.",
-  },
-  // Add other bikes here...
-];
 const BikeDetails = () => {
-  const { bikeName } = useParams();
-  const bike = featuredBikes.find((bike) => bike.name === bikeName);
+  const { slug } = useParams();
+  console.log(slug); // Get the slug from the URL
+  const [bike, setBike] = useState(null); // State to store the bike details
+  const [loading, setLoading] = useState(true); // State to track loading status
+  const [error, setError] = useState(null); // State to handle errors
 
   // State for tracking modal and form submission status
-  const [currentImage, setCurrentImage] = useState(bike?.image || "");
+  const [currentImage, setCurrentImage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    address: "",
+    date: "",
+    time: "",
   });
+
+  // Fetch bike details based on slug
+  useEffect(() => {
+    const fetchBikeDetails = async () => {
+      try {
+        const response = await fetch(
+          "http://bikemart.blacktechcorp.com/public/api/product"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch bike details");
+        }
+        const result = await response.json();
+        console.log("API Response:", result);
+
+        // Ensure result.data is an array
+        if (result.data && Array.isArray(result.data)) {
+          // Transform the API data to match the structure of featuredBikes
+          const transformedBikes = result.data.map((product) => ({
+            name: product.name,
+            slug: product.slug,
+            image: `https://bikemart.blacktechcorp.com/public/${product.image}`,
+            additionalImages: product.gallery
+              ? product.gallery.map(
+                  (img) =>
+                    `https://bikemart.blacktechcorp.com/public/${img.image}`
+                )
+              : [],
+            description: product.shortDescription,
+            price: product.current_price,
+            discount: "10%", // Add discount if available in the API response
+            longDescription: product.longDescription,
+          }));
+
+          // Filter the bike based on the slug
+          const filteredBike = transformedBikes.find((product) => {
+            // Ensure the product has a valid slug before calling toLowerCase()
+            if (!product.slug) {
+              console.warn("Skipping product with missing slug:", product);
+              return false;
+            }
+
+            // Perform a case-insensitive and trimmed comparison
+            return product.slug === slug;
+          });
+
+          // Log the slug and filtered bike for debugging
+          console.log("Slug from URL:", slug);
+          console.log("Filtered Bike:", filteredBike);
+
+          if (filteredBike) {
+            setBike(filteredBike);
+            setCurrentImage(filteredBike.image);
+          } else {
+            throw new Error("Bike not found");
+          }
+        } else {
+          throw new Error("Invalid data format: expected an array");
+        }
+      } catch (error) {
+        console.error("Error fetching bike details:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBikeDetails();
+  }, [slug]);
+  // Utility function to strip HTML tags
+  const stripHtmlTags = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
+  // If loading, show a loading spinner
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  // If error, show an error message
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">Error: {error}</p>
+      </div>
+    );
+  }
 
   // If no bike is found, show a "Bike not found" message
   if (!bike) {
     return <h2 className="text-center mt-8">Bike not found</h2>;
   }
-
-  // Filter out the current bike from the list to display similar bikes
-  const similarProducts = featuredBikes.filter((b) => b.name !== bike.name);
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -116,7 +135,7 @@ const BikeDetails = () => {
   const closeModal = () => {
     setShowModal(false);
     setFormSubmitted(false);
-    setFormData({ name: "", phone: "" });
+    setFormData({ name: "", phone: "", address: "", date: "", time: "" });
   };
 
   return (
@@ -208,38 +227,8 @@ const BikeDetails = () => {
             About {bike.name}
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed">
-            {bike.longDescription}
+            {stripHtmlTags(bike.longDescription)}
           </p>
-        </div>
-
-        {/* Similar Products Section */}
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">
-            Similar Bikes
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {similarProducts.map((product, index) => (
-              <div
-                key={index}
-                className="p-4 bg-white shadow-lg rounded-lg border border-gray-300 hover:shadow-xl transition-all"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-32 object-contain rounded-lg mb-4"
-                />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  {product.name}
-                </h3>
-                <p className="text-red-600 font-bold">Price: {product.price}</p>
-                <Link to={`/bike/${product.name}`}>
-                  <button className="mt-4 px-4 py-2 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition-all">
-                    View Details
-                  </button>
-                </Link>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Modal */}

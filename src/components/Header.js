@@ -1,62 +1,51 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../img/logo.png";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [showBrandsDropdown, setShowBrandsDropdown] = useState(false);
-  const [activeBrand, setActiveBrand] = useState(null);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
 
-
-
   useEffect(() => {
     const fetchCategories = async () => {
-
       const cachedData = localStorage.getItem("cachedCategories");
       const now = new Date().getTime();
 
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
-
-       
         if (now - timestamp < 3600000) {
-        
           console.log("Using cached data");
           setCategories(data);
-       
-          return; 
+          return;
         }
       }
 
-     
       try {
-        const response = await fetch("https://bikemart.blacktechcorp.com/public/api/categories");
+        const response = await fetch(
+          "https://bikemart.blacktechcorp.com/public/api/categories"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
         const result = await response.json();
         console.log("API Response:", result);
 
-        
         if (result.data && Array.isArray(result.data)) {
-          
           const transformedCategories = result.data.map((category) => ({
             name: category.name,
             image: `https://bikemart.blacktechcorp.com/public/${category.image}`,
-            slug: category.slug, 
+            slug: category.slug,
           }));
 
-         
           setCategories(transformedCategories);
 
-          
           const cacheData = {
             data: transformedCategories,
             timestamp: now,
@@ -67,14 +56,12 @@ const Header = () => {
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
-        
-      } finally {
-       
       }
     };
 
     fetchCategories();
   }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -95,7 +82,7 @@ const Header = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-6 lg:px-0">
-        
+        {/* Mobile Menu Toggle Button */}
         <button
           className="text-2xl lg:hidden bg-red-700 text-red-50 px-2 py-2 rounded-lg mr-4 transition-transform transform hover:scale-110"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -107,21 +94,21 @@ const Header = () => {
           )}
         </button>
 
-       
+        {/* Logo */}
         <Link to="/" className="flex items-center">
           <div className="w-[80px] lg:w-[120px]">
             <img src={Logo} alt="Logo" className="" />
           </div>
         </Link>
 
-       
+        {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center space-x-8 font-medium">
           <div
             className="relative group"
             onMouseEnter={() => setShowBrandsDropdown(true)}
             onMouseLeave={() => {
               setShowBrandsDropdown(false);
-              setActiveBrand(null);
+              
             }}
           >
             <span className="cursor-pointer text-white hover:text-red-400 flex items-center">
@@ -142,13 +129,12 @@ const Header = () => {
               </svg>
             </span>
             {showBrandsDropdown && (
-              <div className="absolute  top-4 left-0 bg-white text-black shadow-lg rounded-md w-60 transition-transform transform scale-95">
+              <div className="absolute top-4 left-0 bg-white text-black shadow-lg rounded-md w-60 transition-transform transform scale-95">
                 {categories.map((category) => (
                   <div
                     key={category.name}
                     className="px-6 py-2 hover:bg-gray-50 cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105 group flex items-center space-x-4 rounded-lg border border-gray-200 hover:border-red-300 shadow-sm hover:shadow-md"
-                    onMouseEnter={() => setActiveBrand(category.name)}
-                    onMouseLeave={() => setActiveBrand(null)}
+                   
                     onClick={() => navigate(`/category/${category.slug}`)}
                   >
                     <img
@@ -156,7 +142,7 @@ const Header = () => {
                       alt={category.name}
                       className="w-12 h-10 object-cover rounded-lg border-2 border-gray-200 transition-all"
                     />
-                    <span className="text-base font-medium text-gray-700  transition-all">
+                    <span className="text-base font-medium text-gray-700 transition-all">
                       {category.name}
                     </span>
                   </div>
@@ -174,10 +160,9 @@ const Header = () => {
             Contact
           </Link>
         </nav>
-
-       
       </div>
-     
+
+      {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div className="fixed top-0 left-0 bg-black w-full h-screen shadow-md lg:hidden z-50 transition-transform transform translate-x-0">
           <nav className="flex flex-col font-medium py-4 relative h-full">
@@ -228,11 +213,10 @@ const Header = () => {
                   {categories.map((category) => (
                     <div key={category.name} className="relative">
                       <div
-                        className="px-4 py-2 hover:bg-red-700 hover:text-white cursor-pointer font-bold flex justify-between items-center"
+                        className="px-4 py-2 hover:bg-red-700 hover:text-white cursor-pointer border-b border-2 font-bold flex justify-start gap-6 items-center"
                         onClick={() => {
-                          setActiveBrand(
-                            activeBrand === category.name ? null : category.name
-                          );
+                          navigate(`/category/${category.slug}`); // Navigate to category
+                          setMobileMenuOpen(false); 
                         }}
                       >
                         <img
@@ -240,7 +224,7 @@ const Header = () => {
                           alt={category.name}
                           className="w-12 h-10 object-cover rounded-lg border-2 border-gray-200 transition-all"
                         />
-                        <span className="text-base font-medium text-gray-700  transition-all">
+                        <span className="text-base font-medium text-gray-700 transition-all">
                           {category.name}
                         </span>
                       </div>

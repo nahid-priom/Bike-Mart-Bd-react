@@ -36,6 +36,7 @@ const FeaturedBikes = () => {
 
         if (result.data && Array.isArray(result.data)) {
           const transformedBikes = result.data.map((bike) => ({
+            slug: bike.slug,
             name: bike.name,
             image: `https://bikemart.blacktechcorp.com/public/${bike.image}`,
             price: `BDT ${bike.current_price}`,
@@ -133,7 +134,7 @@ const FeaturedBikes = () => {
           <div
             key={index}
             className="p-4 bg-white cursor-pointer shadow-md h-88 lg:h-96 border border-red-200 rounded-lg hover:shadow-xl transition-all relative"
-            onClick={() => navigate(`/bike/${bike.name}`)}
+            onClick={() => navigate(`/bike/${bike.slug}`)}
           >
             <div className="relative overflow-hidden rounded-lg">
               <img
@@ -146,7 +147,7 @@ const FeaturedBikes = () => {
               </div>
             </div>
 
-            <div className="absolute top-4 right-1 lg:right-2 bg-white text-red-500 border border-red-500 text-sm font-bold w-12 h-12 flex items-center justify-center rounded-full animate-bounce">
+            <div className="absolute top-4 right-0 lg:right-2 bg-white text-red-500 border border-red-500 text-sm font-bold w-12 h-12 flex items-center justify-center rounded-full animate-bounce">
               {bike.discount}
             </div>
 

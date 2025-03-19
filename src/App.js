@@ -15,7 +15,8 @@ import ClearCache from "./components/ClearCache";
 
 
 import AllCategoriesPage from "./pages/AllCategoriesPage";
-import ChildCategoryPage from "./pages/ChildCategoriesPage";
+import ProductsPage from "./pages/Products";
+
 import BlogPage from "./pages/BlogPage";
 import BlogDetails from "./pages/BlogDetails";
 import ContactPage from "./pages/Contact";
@@ -30,13 +31,14 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
-          <Route path="/bike/:bikeName" element={<BikeDetails />} />
+          <Route path="/bike/:slug" element={<BikeDetails />} />
           <Route path="/all-categories" element={<AllCategoriesPage />} />
-          <Route path="/category/:name" element={<ChildCategoryPage />} />
+          
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/clear-cache" element={<ClearCache />} />
+          <Route path="/category/:slug" element={<ProductsPage />} />
 
         </Routes>
         <FloatingCallButton />
