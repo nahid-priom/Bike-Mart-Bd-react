@@ -151,12 +151,12 @@ const FeaturedBikes = () => {
               {bike.discount}
             </div>
 
-            <div className="mt-4 text-center">
-              <h3 className="text-sm lg:text-lg font-semibold text-gray-800">
+            <div className="mt-2 h-40 flex justify-center items-center flex-col  text-center">
+              <h3 className="text-base lg:text-lg font-semibold text-gray-800">
                 {bike.name}
               </h3>
               <p className="text-gray-600 text-[10px] mt-2">
-                {bike.description.split(" ").slice(0, 20).join(" ")}...
+                {bike.description.split(" ").slice(0, 15).join(" ")}...
               </p>
               <Link to={`/bike/${bike.name}`}>
                 <button className="mt-4 px-4 py-2 bg-red-50 text-red-500 font-bold border border-red-500 hover:text-white text-sm rounded-md hover:bg-red-600 transition-all">

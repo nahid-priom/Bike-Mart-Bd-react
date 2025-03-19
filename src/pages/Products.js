@@ -85,7 +85,7 @@ const ProductsPage = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className="p-4 bg-white cursor-pointer shadow-md h-88 lg:h-96 border border-red-200 rounded-lg hover:shadow-xl transition-all relative"
+              className="p-2 lg:p-4 bg-white cursor-pointer shadow-md h-88 lg:h-96 border border-red-200 rounded-lg hover:shadow-xl transition-all relative"
               onClick={() => navigate(`/bike/${product.slug}`)}
             >
               <div className="relative overflow-hidden rounded-lg">
@@ -99,11 +99,11 @@ const ProductsPage = () => {
                 </div>
               </div>
 
-              <div className="absolute top-0 lg:top-4 -right-2 lg:right-2 bg-white text-red-500 border border-red-500 text-sm font-bold w-12 h-12 flex items-center justify-center rounded-full animate-bounce">
+              <div className="absolute top-0 lg:top-4 -right-6 lg:right-2 bg-white text-red-500 border border-red-500 text-sm font-bold w-12 h-12 flex items-center justify-center rounded-full animate-bounce">
                 {product.discount}
               </div>
 
-              <div className="mt-4 text-center">
+              <div className=" flex flex-col justify-center items-center text-center">
                 <h3 className="text-sm lg:text-lg font-semibold text-gray-800">
                   {product.name}
                 </h3>
@@ -113,7 +113,7 @@ const ProductsPage = () => {
                     : "No description available"}
                 </p>
 
-                <button className="mt-4 px-4 py-2 bg-red-50 text-red-500 font-bold border border-red-500 hover:text-white text-sm rounded-md hover:bg-red-600 transition-all">
+                <button className="mt-4 px-2 py-1 lg:px-3 lg:py-2 bg-red-50 text-red-500 font-bold border border-red-500 hover:text-white text-sm rounded-md hover:bg-red-600 transition-all">
                   View Details
                 </button>
               </div>
